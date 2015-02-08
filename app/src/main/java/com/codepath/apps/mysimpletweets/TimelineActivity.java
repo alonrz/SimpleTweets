@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class TimelineActivity extends ActionBarActivity {
 
+    private static final int REQUEST_CODE_COMPOSE = 300;
     private TwitterClient client;
     private TweetsArrayAdapter adapter;
     private ArrayList<Tweet> tweets;
@@ -93,10 +95,23 @@ public class TimelineActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_compose) {
+            Intent i = new Intent(this, ComposeActivity.class);
+            startActivityForResult(i, REQUEST_CODE_COMPOSE);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE_COMPOSE && resultCode == RESULT_OK)
+        {
+            Tweet newTweet = (Tweet) data.getSerializableExtra("tweet");
+            adapter.clear();
+            adapter.add(newTweet);//add new tweet to adapter
+            this.populateTimeline(); //then load new tweets.
+        }
     }
 }

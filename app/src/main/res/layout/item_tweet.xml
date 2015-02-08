@@ -22,7 +22,7 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:textStyle="bold"
         android:textColor="@android:color/primary_text_light"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,7 +46,8 @@
         android:layout_toRightOf="@+id/tvFullName"
         android:layout_toEndOf="@+id/tvFullName"
         android:layout_marginLeft="5dp"
-        android:textColor="@android:color/secondary_text_light_nodisable" />
+        android:textColor="@android:color/secondary_text_light_nodisable"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:layout_width="wrap_content"
