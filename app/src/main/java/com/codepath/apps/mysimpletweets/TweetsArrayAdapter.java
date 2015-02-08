@@ -67,8 +67,12 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
             e.printStackTrace();
         }
         //reformat string and turn "minutes ago" into "m" and "seconds ago" to "s"
-        relativeDate = relativeDate.replace(" minutes ago", "m");
-        relativeDate = relativeDate.replace(" seconds ago", "s");
-       return relativeDate;
+        relativeDate = relativeDate.replaceAll(" second.* ago", "s");
+        relativeDate = relativeDate.replaceAll(" minute.* ago", "m");
+        relativeDate = relativeDate.replaceAll(" hour.* ago", "h");
+        relativeDate = relativeDate.replaceAll(" day.* ago", "d");
+        relativeDate = relativeDate.replaceAll(" week.* ago", "w");
+        relativeDate = relativeDate.replaceAll(" month.* ago", "mo");
+        return relativeDate;
     }
 }
