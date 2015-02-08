@@ -29,6 +29,8 @@
         android:layout_height="wrap_content"
         android:text="Body of tweet"
         android:id="@+id/tvBody"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:layout_below="@+id/tvFullName"
         android:layout_toRightOf="@+id/ivProfileImage"
         android:layout_toEndOf="@+id/ivProfileImage"
