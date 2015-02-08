@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -48,14 +49,18 @@ public class TwitterClient extends OAuthBaseClient {
 //    GET statuses/user_timeline.json
 //            count=25
 //            since_id=1
-    public void getHomeTimeline(AsyncHttpResponseHandler handler){
+    public void getHomeTimeline(AsyncHttpResponseHandler handler, long max_id){
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         //spedify params
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        params.put("since_id", 1);
+//        params.put("since_id", 1);
+        if(max_id > 10)
+            params.put("max_id", max_id-1); //the -1 is b/c max_id is inclusive.
         //exec the request
+        Log.i("CONNECTING", "a call was made to twitter!");
         getClient().get(apiUrl, params, handler);
+
     }
 
     //COMPOSE A TWEET METHOD

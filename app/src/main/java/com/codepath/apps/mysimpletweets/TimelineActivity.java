@@ -22,6 +22,7 @@ public class TimelineActivity extends ActionBarActivity {
     private TweetsArrayAdapter adapter;
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
+    private long max_id=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,21 @@ public class TimelineActivity extends ActionBarActivity {
         adapter = new TweetsArrayAdapter(this, tweets);
         //connect listview and adapter
         lvTweets.setAdapter(adapter);
+        //Set end-less scrolling here
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                loadMoreDataFromAPI(page, totalItemsCount);
+            }
+        });
         //Get the client
         client = TwitterApplication.getRestClient();
         populateTimeline();
+    }
+
+    private void loadMoreDataFromAPI(int page, int totalItemsCount) {
+        populateTimeline();
+//        adapter.notifyDataSetChanged();
     }
 
     private void populateTimeline() {
@@ -47,6 +60,11 @@ public class TimelineActivity extends ActionBarActivity {
                 Log.d("DEBUG", json.toString());
                 //Deserialize json
                 adapter.addAll(Tweet.fromJSONArray(json));
+                //Get the max_id from the last tweet on the list.
+                if(adapter.getCount()-1 >=0 ) {
+                    Tweet t = adapter.getItem(adapter.getCount() - 1);
+                    max_id = t.getUniqueId();
+                }
                 //Create models
                 //load the model data into listview
             }
@@ -56,7 +74,7 @@ public class TimelineActivity extends ActionBarActivity {
                 Log.d("DEBUG", errorResponse.toString());
 
             }
-        });
+        }, max_id);
     }
 
 
