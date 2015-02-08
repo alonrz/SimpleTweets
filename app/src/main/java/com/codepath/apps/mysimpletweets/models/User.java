@@ -4,13 +4,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
-    private String name;
+    private String fullName;
     private long uniqueId;
     private String screenName;
     private String profileImageUrl;
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
     public long getUniqueId() {
@@ -18,7 +18,7 @@ public class User {
     }
 
     public String getScreenName() {
-        return screenName;
+        return "@"+screenName;
     }
 
     public String getProfileImageUrl() {
@@ -30,7 +30,7 @@ public class User {
         User u = new User();
 
         try {
-            u.name = json.getString("name");
+            u.fullName = json.getString("name");
             u.uniqueId = json.getLong("id");
             u.screenName = json.getString("screen_name");
             u.profileImageUrl = json.getString("profile_image_url");

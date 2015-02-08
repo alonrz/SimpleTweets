@@ -35,11 +35,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         //find the subview to fill data in the templates
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvFullName);
+        TextView tvFullName = (TextView) convertView.findViewById(R.id.tvFullName);
+        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvTime = (TextView) convertView.findViewById(R.id.tvTime);
 
         //poopulate data into subviews
         tvBody.setText(tweet.getBody());
+        tvFullName.setText(tweet.getUser().getFullName());
         tvUserName.setText(tweet.getUser().getScreenName());
         tvTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
         ivProfileImage.setImageResource(android.R.color.transparent);//clear

@@ -117,6 +117,7 @@ public class Tweet {
             tweet.uniqueId = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
