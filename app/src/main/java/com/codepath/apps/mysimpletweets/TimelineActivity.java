@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.codepath.apps.mysimpletweets.models.Tweet;
@@ -136,7 +135,7 @@ public class TimelineActivity extends ActionBarActivity {
                     Log.d("DEBUG", errorResponse.toString());
                 else {
                     Log.d("DEBUG", "getHomeTimeline Failed! Status code: " + statusCode);
-                    Toast.makeText(TimelineActivity.this, "Something went wrong, no new tweets loaded", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(TimelineActivity.this, "Something went wrong, no new tweets loaded", Toast.LENGTH_LONG).show();
                     new AlertDialog.Builder(TimelineActivity.this)
                             .setTitle("Something Wrong...")
                             .setMessage("Internet down?! \nWe could not fetch new tweets.")
