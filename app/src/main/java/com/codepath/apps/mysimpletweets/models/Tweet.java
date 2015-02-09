@@ -1,11 +1,18 @@
 package com.codepath.apps.mysimpletweets.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 
@@ -86,11 +93,19 @@ import java.util.ArrayList;
 
 
  */
-public class Tweet implements Serializable {
+@Table(name = "tweets")
+public class Tweet extends Model implements Serializable {
     //list attributes
+    @Column(name = "body")
     private String body;
+
+    @Column(name = "unique_id", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE, index=true)
     private long uniqueId; //unique ID for tweet
+
+    @Column(name = "user")
     private User user;
+
+    @Column(name = "created_at")
     private String createdAt;
 
     public String getBody() {
@@ -149,6 +164,23 @@ public class Tweet implements Serializable {
                 e.printStackTrace();
                 continue; //if one fails, keep processing others
             }
+        }
+        return tweets;
+    }
+
+    public static void dropTable()
+    {
+        new Delete().from(Tweet.class).execute();
+    }
+
+    public static List<Tweet> getAllFromDB()
+    {
+        List<Tweet> tweets = new ArrayList<>();
+        try {
+            return new Select().from(Tweet.class).execute();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
         }
         return tweets;
     }

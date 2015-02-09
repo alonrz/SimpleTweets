@@ -1,12 +1,26 @@
 package com.codepath.apps.mysimpletweets.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+@Table(name = "users")
+public class User extends Model {
+
+    @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "unique_id", unique = true, index=true)
     private long uniqueId;
+
+    @Column(name = "screen_name")
     private String screenName;
+
+    @Column(name = "profile_image_url")
     private String profileImageUrl;
 
     public String getFullName() {
@@ -49,4 +63,11 @@ public class User {
 
         return u;
     }
+
+    public void dropTable()
+    {
+        new Delete().from(User.class).execute();
+    }
+
+
 }
