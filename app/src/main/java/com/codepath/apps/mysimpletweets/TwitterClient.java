@@ -45,8 +45,20 @@ public class TwitterClient extends OAuthBaseClient {
 
     //Method == END POINT
 
-    //getUserInfo - get the user information by his authentication
-    // GET account/verify_credentials.json
+    /* Send compose tweet
+    POST statuses/update.json
+        status = the text of the tweet
+    */
+    public void postComposedTweet(AsyncHttpResponseHandler handler, String text)
+    {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams params = new RequestParams();
+        params.put("status", text);
+        getClient().post(apiUrl, params, handler);
+    }
+
+    /* getUserInfo - get the user information by his authentication
+    // GET account/verify_credentials.json */
     public void getUserProfile(AsyncHttpResponseHandler handler){
         String apiUrl = getApiUrl("account/verify_credentials.json");
 //        RequestParams params = new RequestParams();
@@ -55,10 +67,11 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
 
-    // HomeTimeLine - Gets us the home timeline
-//    GET statuses/user_timeline.json
-//            count=25
-//            since_id=1
+    /* HomeTimeLine - Gets us the home timeline
+    GET statuses/user_timeline.json
+            count=25
+            since_id=1
+            */
     public void getHomeTimeline(AsyncHttpResponseHandler handler, long max_id){
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         //spedify params

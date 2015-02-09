@@ -10,5 +10,6 @@
     <string name="title_activity_compose">Compose</string>
     <string name="tweet_hint">What\'s happening?</string>
     <string name="char_count">140</string>
+    <string name="time_now">Now</string>
 
 </resources>

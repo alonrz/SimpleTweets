@@ -102,6 +102,8 @@ public class Tweet implements Serializable {
     }
 
     public String getCreatedAt() {
+        if(createdAt == null || createdAt.isEmpty())
+            return "now";
         return createdAt;
     }
 
@@ -109,6 +111,14 @@ public class Tweet implements Serializable {
         return user;
     }
 
+    public Tweet() {
+    }
+
+    public Tweet(String body, User user)
+    {
+        this.body = body;
+        this.user = user;
+    }
     public static Tweet fromJSON(JSONObject jsonObject)
     {
         Tweet tweet = new Tweet();

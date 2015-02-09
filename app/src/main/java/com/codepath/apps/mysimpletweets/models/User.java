@@ -25,6 +25,15 @@ public class User {
         return profileImageUrl;
     }
 
+    public User() {
+    }
+
+    public User(String profileImageUrl, String screenName, String fullName) {
+        this.profileImageUrl = profileImageUrl;
+        this.screenName = screenName;
+        this.fullName = fullName;
+    }
+
     public static User fromJSON(JSONObject json)
     {
         User u = new User();

@@ -8,15 +8,18 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
+
+import org.apache.http.Header;
 
 public class ComposeActivity extends ActionBarActivity {
 
@@ -24,6 +27,8 @@ public class ComposeActivity extends ActionBarActivity {
     ActionMenuItemView item_count;
     ActionMenuItemView item_send;
     int charCount = 0;
+    private TwitterClient client;
+    Tweet tweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,7 @@ public class ComposeActivity extends ActionBarActivity {
         if(ProfileImageUrl != null)
             Picasso.with(this).load(ProfileImageUrl).into(ivProfileImage);
 
+        client = TwitterApplication.getRestClient();
 
     }
 
@@ -92,14 +98,24 @@ public class ComposeActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
-            Intent data = new Intent();
-            Toast.makeText(this, etBody.getText(), Toast.LENGTH_SHORT).show();
-            data.putExtra("tweet", new Tweet());
-            setResult(RESULT_OK, data);
-            this.finish();
+            client.postComposedTweet(new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.i("COMPOSE", responseBody.toString());
+                    Intent data = new Intent();
+                    data.putExtra("body", etBody.getText().toString());
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.e("COMPOSE_Err", "Status code: " + statusCode + "body: " + responseBody.toString());
+                }
+            },etBody.getText().toString() );
+
             return true;
         }
 

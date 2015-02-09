@@ -27,6 +27,7 @@ public class TimelineActivity extends ActionBarActivity {
     private ArrayList<Tweet> tweets;
     private ListView lvTweets;
     private long max_id=1;
+    private  User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class TimelineActivity extends ActionBarActivity {
                     editor.putString("ProfileImageUrl", u.getProfileImageUrl());
                 editor.putLong("UniqueId", u.getUniqueId());
                 editor.apply();
+                user = u;
             }
 
             @Override
@@ -133,11 +135,13 @@ public class TimelineActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CODE_COMPOSE && resultCode == RESULT_OK)
         {
-            Tweet newTweet = (Tweet) data.getSerializableExtra("tweet");
-            /*
+            String body = data.getStringExtra("body");
+
+            Tweet t = new Tweet(body, user);
+
             adapter.clear();
-            adapter.add(newTweet);//add new tweet to adapter
-            */
+            adapter.add(t);//add new tweet to adapter
+
             this.populateTimeline(); //then load new tweets.
         }
     }

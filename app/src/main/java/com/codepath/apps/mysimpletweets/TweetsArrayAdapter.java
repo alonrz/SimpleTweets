@@ -43,7 +43,10 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         tvBody.setText(tweet.getBody());
         tvFullName.setText(tweet.getUser().getFullName());
         tvUserName.setText(tweet.getUser().getScreenName());
-        tvTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+        if(tweet.getCreatedAt().toLowerCase() == "now")
+            tvTime.setText(tweet.getCreatedAt());
+        else
+            tvTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
         ivProfileImage.setImageResource(android.R.color.transparent);//clear
         Picasso.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
