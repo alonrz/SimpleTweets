@@ -24,7 +24,7 @@ import org.scribe.builder.api.TwitterApi;
  */
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
+	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
 	public static final String REST_CONSUMER_KEY = "bMODWdlEh9fRNNOL822p1f5jp";       // Change this
 	public static final String REST_CONSUMER_SECRET = "Zqj6EF49PRWxlgzKe80DgmdGbDvDMdrYmlyvOvflZvfHXR568H"; // Change this
 	public static final String REST_CALLBACK_URL = "oauth://ARZTweetsApp"; // Change this (here and in manifest)
@@ -85,17 +85,4 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
 
     }
-
-    //COMPOSE A TWEET METHOD
-
-
-
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
 }

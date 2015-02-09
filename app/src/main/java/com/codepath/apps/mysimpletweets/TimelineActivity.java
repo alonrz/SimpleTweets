@@ -140,6 +140,7 @@ public class TimelineActivity extends ActionBarActivity {
             Tweet t = new Tweet(body, user);
 
             adapter.clear();
+            max_id=1; //make new posts come back on reload.
             adapter.add(t);//add new tweet to adapter
 
             this.populateTimeline(); //then load new tweets.
