@@ -8,7 +8,7 @@
     <string name="action_compose">Compose</string>
     <string name="action_send">Send</string>
     <string name="title_activity_compose">Compose</string>
-    <string name="tweet_hint">Your tweet goes here</string>
+    <string name="tweet_hint">What\'s happening?</string>
     <string name="char_count">140</string>
 
 </resources>

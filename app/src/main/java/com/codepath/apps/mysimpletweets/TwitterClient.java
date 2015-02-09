@@ -45,6 +45,16 @@ public class TwitterClient extends OAuthBaseClient {
 
     //Method == END POINT
 
+    //getUserInfo - get the user information by his authentication
+    // GET account/verify_credentials.json
+    public void getUserProfile(AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+//        RequestParams params = new RequestParams();
+        //no params. The default is good.
+        getClient().get(apiUrl, handler);
+    }
+
+
     // HomeTimeLine - Gets us the home timeline
 //    GET statuses/user_timeline.json
 //            count=25

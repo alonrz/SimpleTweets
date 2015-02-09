@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.codepath.apps.mysimpletweets.models.Tweet;
+import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -47,6 +49,30 @@ public class TimelineActivity extends ActionBarActivity {
         //Get the client
         client = TwitterApplication.getRestClient();
         populateTimeline();
+        getUserProfile();
+    }
+
+    private void getUserProfile() {
+        client.getUserProfile(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                Log.d("DEBUG", json.toString());
+                User u = User.fromJSON(json);
+                //Store in sharedPreferences
+                SharedPreferences userInfo = getSharedPreferences("userInfo", 0);
+                SharedPreferences.Editor editor = userInfo.edit();
+                editor.putString("ScreenName", u.getScreenName());
+                editor.putString("FullName", u.getFullName());
+                    editor.putString("ProfileImageUrl", u.getProfileImageUrl());
+                editor.putLong("UniqueId", u.getUniqueId());
+                editor.apply();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+            }
+        });
     }
 
     private void loadMoreDataFromAPI(int page, int totalItemsCount) {
@@ -67,8 +93,7 @@ public class TimelineActivity extends ActionBarActivity {
                     Tweet t = adapter.getItem(adapter.getCount() - 1);
                     max_id = t.getUniqueId();
                 }
-                //Create models
-                //load the model data into listview
+
             }
 
             @Override
@@ -109,8 +134,10 @@ public class TimelineActivity extends ActionBarActivity {
         if(requestCode == REQUEST_CODE_COMPOSE && resultCode == RESULT_OK)
         {
             Tweet newTweet = (Tweet) data.getSerializableExtra("tweet");
+            /*
             adapter.clear();
             adapter.add(newTweet);//add new tweet to adapter
+            */
             this.populateTimeline(); //then load new tweets.
         }
     }
