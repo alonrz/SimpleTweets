@@ -219,14 +219,14 @@ public class TimelineActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_CODE_COMPOSE && resultCode == RESULT_OK)
         {
-            String body = data.getStringExtra("body");
+//            String body = data.getStringExtra("body");
 
-            Tweet t = new Tweet(body, user);
+//            Tweet t = new Tweet(body, user);
 
             adapter.clear();
             max_id=1; //make new posts come back on reload.
 
-            adapter.add(t);//add new tweet to adapter
+//            adapter.add(t);//add new tweet to adapter
 
             this.populateTimeline(); //then load new tweets.
         }
