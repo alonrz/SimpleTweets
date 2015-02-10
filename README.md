@@ -31,6 +31,6 @@ User stories (Optional):
  
 
 
-![Video Walkthrough](SimpleTweetsAppWalkthough.gif)
+![Video Walkthrough](SimpleTweetsAppWalkthough2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
