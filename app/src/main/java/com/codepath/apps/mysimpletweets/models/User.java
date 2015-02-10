@@ -14,7 +14,7 @@ public class User extends Model {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "unique_id", unique = true, index=true)
+    @Column(name = "unique_id", index=true)
     private long uniqueId;
 
     @Column(name = "screen_name")

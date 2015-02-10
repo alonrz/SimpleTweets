@@ -3,7 +3,6 @@ package com.codepath.apps.mysimpletweets.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
@@ -170,7 +169,17 @@ public class Tweet extends Model implements Serializable {
 
     public static void dropTable()
     {
-        new Delete().from(Tweet.class).execute();
+        try {
+            List<Tweet> tempList = new Select().from(Tweet.class).execute();
+            for (int i = 0; i < tempList.size(); i++) {
+                tempList.get(i).delete();
+                tempList.get(i).getUser().delete();
+
+            }
+        }catch
+                (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static List<Tweet> getAllFromDB()

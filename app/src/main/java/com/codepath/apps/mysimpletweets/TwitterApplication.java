@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 
 import com.activeandroid.ActiveAndroid;
 
@@ -21,7 +22,10 @@ public class TwitterApplication extends com.activeandroid.app.Application {
 		super.onCreate();
 		TwitterApplication.context = this;
         ActiveAndroid.initialize(this);
-	}
+
+
+
+    }
 
 	public static TwitterClient getRestClient() {
 		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, TwitterApplication.context);

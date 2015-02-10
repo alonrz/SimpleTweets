@@ -3,7 +3,7 @@
 
     <string name="app_name">Simple Tweets</string>
     <string name="login_label">Connect to Twitter</string>
-    <string name="title_activity_timeline">Home Timeline</string>
+    <string name="title_activity_timeline">Timeline</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_compose">Compose</string>
     <string name="action_send">Send</string>
