@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     tools:context="com.codepath.apps.mysimpletweets.fragments.UserHeaderFragment">
 
     <ImageView
@@ -28,8 +32,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="screen name"
-        android:id="@+id/tvScreenName"
+        android:text="Tag line"
+        android:id="@+id/tvTagline"
         android:layout_alignBottom="@+id/ivProfileImage"
         android:layout_toRightOf="@+id/ivProfileImage"
         android:layout_toEndOf="@+id/ivProfileImage"
@@ -48,14 +52,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Followers"
-            android:id="@+id/tvFollowers" />
+            android:text="@string/label_followers"
+            android:id="@+id/tvFollowers"
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Following"
+            android:text="@string/label_following"
             android:id="@+id/tvFollowing"
             android:layout_marginLeft="20dp" />
     </LinearLayout>

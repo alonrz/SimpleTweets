@@ -2,6 +2,7 @@ package com.codepath.apps.mysimpletweets.fragments;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,18 +93,18 @@ public class UserHeaderFragment extends android.support.v4.app.Fragment {
 
         ImageView ivProfileImage = (ImageView) v.findViewById(R.id.ivProfileImage);
         TextView tvFullName = (TextView) v.findViewById(R.id.tvFullName);
-        TextView tvScreenName = (TextView) v.findViewById(R.id.tvScreenName);
+        TextView tvTagline = (TextView) v.findViewById(R.id.tvTagline);
         TextView tvFollowers = (TextView) v.findViewById(R.id.tvFollowers);
         TextView tvFollowing = (TextView) v.findViewById(R.id.tvFollowing);
 
         tvFullName.setText(user.getFullName());
-        tvScreenName.setText(user.getScreenName());
         String ProfileImageUrl = user.getProfileImageUrl();
         if (ProfileImageUrl != null)
             Picasso.with(getActivity()).load(ProfileImageUrl).into(ivProfileImage);
 
-        tvFollowers.setText(user.getFollowersCount());
-        tvFollowing.setText(user.getFollowingCount());
+        tvFollowers.setText(user.getFollowersCount() + " " + getString(R.string.label_followers));
+        tvFollowing.setText(user.getFollowingCount() + " " + getString(R.string.label_following));
+        tvTagline.setText(user.getTagLine());
 
     }
 
