@@ -64,6 +64,7 @@ public class TweetsListFragment extends Fragment{
                 editor.putLong("UniqueId", u.getUniqueId());
                 editor.apply();
                 user = u;
+
             }
 
             @Override

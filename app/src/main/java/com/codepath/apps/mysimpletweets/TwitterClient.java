@@ -24,25 +24,25 @@ import org.scribe.builder.api.TwitterApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "bMODWdlEh9fRNNOL822p1f5jp";       // Change this
-	public static final String REST_CONSUMER_SECRET = "Zqj6EF49PRWxlgzKe80DgmdGbDvDMdrYmlyvOvflZvfHXR568H"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://ARZTweetsApp"; // Change this (here and in manifest)
+    public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+    public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
+    public static final String REST_CONSUMER_KEY = "bMODWdlEh9fRNNOL822p1f5jp";       // Change this
+    public static final String REST_CONSUMER_SECRET = "Zqj6EF49PRWxlgzKe80DgmdGbDvDMdrYmlyvOvflZvfHXR568H"; // Change this
+    public static final String REST_CALLBACK_URL = "oauth://ARZTweetsApp"; // Change this (here and in manifest)
 
-	public TwitterClient(Context context) {
-		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
-	}
+    public TwitterClient(Context context) {
+        super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
+    }
 
-	// CHANGE THIS
-	// DEFINE METHODS for different API endpoints here
-	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-		// Can specify query string params directly or through RequestParams.
-		RequestParams params = new RequestParams();
-		params.put("format", "json");
-		client.get(apiUrl, params, handler);
-	}
+    // CHANGE THIS
+    // DEFINE METHODS for different API endpoints here
+    public void getInterestingnessList(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("format", "json");
+        client.get(apiUrl, params, handler);
+    }
 
     //Method == END POINT
 
@@ -50,21 +50,11 @@ public class TwitterClient extends OAuthBaseClient {
     POST statuses/update.json
         status = the text of the tweet
     */
-    public void postComposedTweet(AsyncHttpResponseHandler handler, String text)
-    {
+    public void postComposedTweet(AsyncHttpResponseHandler handler, String text) {
         String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", text);
         getClient().post(apiUrl, params, handler);
-    }
-
-    /* getUserInfo - get the user information by his authentication
-    // GET account/verify_credentials.json */
-    public void getUserProfile(AsyncHttpResponseHandler handler){
-        String apiUrl = getApiUrl("account/verify_credentials.json");
-//        RequestParams params = new RequestParams();
-        //no params. The default is good.
-        getClient().get(apiUrl, handler);
     }
 
 
@@ -73,21 +63,21 @@ public class TwitterClient extends OAuthBaseClient {
             count=25
             since_id=1
             */
-    public void getHomeTimeline(AsyncHttpResponseHandler handler, long max_id){
+    public void getHomeTimeline(AsyncHttpResponseHandler handler, long max_id) {
         String apiUrl = getApiUrl("statuses/home_timeline.json");
         //spedify params
         RequestParams params = new RequestParams();
         params.put("count", 25);
 //        params.put("since_id", 1);
-        if(max_id > 10)
-            params.put("max_id", max_id-1); //the -1 is b/c max_id is inclusive.
+        if (max_id > 10)
+            params.put("max_id", max_id - 1); //the -1 is b/c max_id is inclusive.
         //exec the request
         Log.i("CONNECTING", "a call was made to twitter!");
         getClient().get(apiUrl, params, handler);
 
     }
 
-    public void getMentionsTimeline(JsonHttpResponseHandler handler) {
+    public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         //spedify params
         RequestParams params = new RequestParams();
@@ -98,5 +88,23 @@ public class TwitterClient extends OAuthBaseClient {
         //exec the request
         Log.i("CONNECTING", "a call was made to twitter!");
         getClient().get(apiUrl, params, handler);
+    }
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler)
+    {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("screen_name", screenName);
+        getClient().get(apiUrl, params, handler);
+
+    }
+
+    /* getUserInfo - get the user information by his authentication
+    // GET account/verify_credentials.json */
+    public void getUserProfile(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+//        RequestParams params = new RequestParams();
+        //no params. The default is good.
+        getClient().get(apiUrl, handler);
     }
 }
