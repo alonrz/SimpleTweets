@@ -35,7 +35,7 @@ public class ProfileActivity extends ActionBarActivity {
                 user = User.fromJSON(response);
                 //current user account info
                 getSupportActionBar().setTitle(user.getScreenName());
-                populateProfileHeader(user);
+                fragmentUserHeader.addUserInfo(user);
             }
         });
 
@@ -50,14 +50,6 @@ public class ProfileActivity extends ActionBarActivity {
 
             ft.commit();
         }
-
-
-
-
-    }
-
-    private void populateProfileHeader(User user) {
-
     }
 
 

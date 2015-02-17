@@ -44,7 +44,7 @@ public class UserHeaderFragment extends android.support.v4.app.Fragment {
     TwitterClient client;
     User user;
     View v;
-    private OnFragmentUserInfoAvailableListener mListener;
+
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -85,8 +85,8 @@ public class UserHeaderFragment extends android.support.v4.app.Fragment {
         return v;
     }
 
-    @Override
-    public void onFragmentUserProfileInfoAvailable(User user) {
+
+    public void addUserInfo(User user) {
         this.user = user;
 
 
@@ -107,37 +107,37 @@ public class UserHeaderFragment extends android.support.v4.app.Fragment {
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//
+//        if (activity instanceof OnFragmentUserInfoAvailableListener)
+//            mListener = (OnFragmentUserInfoAvailableListener) activity;
+//        else {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+//    }
 
-        if (activity instanceof OnFragmentUserInfoAvailableListener)
-            mListener = (OnFragmentUserInfoAvailableListener) activity;
-        else {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        mListener = null;
+//    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentUserInfoAvailableListener {
-        // TODO: Update argument type and name
-        public void onFragmentUserProfileInfoAvailable(User user);
-    }
+//    /**
+//     * This interface must be implemented by activities that contain this
+//     * fragment to allow an interaction in this fragment to be communicated
+//     * to the activity and potentially other fragments contained in that
+//     * activity.
+//     * <p/>
+//     * See the Android Training lesson <a href=
+//     * "http://developer.android.com/training/basics/fragments/communicating.html"
+//     * >Communicating with Other Fragments</a> for more information.
+//     */
+//    public interface OnFragmentUserInfoAvailableListener {
+//        // TODO: Update argument type and name
+//        public void onFragmentUserProfileInfoAvailable(User user);
+//    }
 
 }
