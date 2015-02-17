@@ -8,6 +8,7 @@ External libraries used:
 - [Android Asynchronous Http Client](http://loopj.com/android-async-http/)
 - [Picasso](http://square.github.io/picasso/)
 - [ActiveAndroid](http://www.activeandroid.com)
+- [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)
 
 User stories include (must):
  * [x] User can sign in to Twitter using OAuth login

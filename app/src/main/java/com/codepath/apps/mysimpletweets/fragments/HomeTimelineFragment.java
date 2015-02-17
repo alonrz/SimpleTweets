@@ -45,13 +45,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         populateTimeline();
         getUserProfile();
 
-        //Set end-less scrolling here
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline();
-            }
-        });
+
 
     }
 
@@ -76,6 +70,14 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        //Set end-less scrolling here
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                populateTimeline();
+            }
+        });
         return v;
     }
 
