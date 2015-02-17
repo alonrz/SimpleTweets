@@ -89,8 +89,8 @@ public class TwitterClient extends OAuthBaseClient {
         Log.i("CONNECTING", "a call was made to twitter!");
         getClient().get(apiUrl, params, handler);
     }
-    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler)
-    {
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/user_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 25);
@@ -103,8 +103,20 @@ public class TwitterClient extends OAuthBaseClient {
     // GET account/verify_credentials.json */
     public void getUserProfile(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("account/verify_credentials.json");
-//        RequestParams params = new RequestParams();
-        //no params. The default is good.
         getClient().get(apiUrl, handler);
     }
+
+    /**
+     * Used to find profile info for OTHER users
+     * @param screenName
+     * @param handler
+     */
+    public void getUserProfile(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("users/show.json");
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+//       no params. The default is good.
+        getClient().get(apiUrl, params, handler);
+    }
+
 }

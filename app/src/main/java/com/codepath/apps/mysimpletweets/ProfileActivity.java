@@ -19,6 +19,7 @@ public class ProfileActivity extends ActionBarActivity {
     User user;
     UserTimelineFragment fragmentUserTimeline;
     UserHeaderFragment fragmentUserHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +28,15 @@ public class ProfileActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //get Screen name from the activity
         String screenName = getIntent().getStringExtra("screenName");
+        getSupportActionBar().setTitle(screenName);
 
         //get account info
-        client.getUserProfile(new JsonHttpResponseHandler() {
+        client.getUserProfile(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
                 //current user account info
-                getSupportActionBar().setTitle(user.getScreenName());
+
                 fragmentUserHeader.addUserInfo(user);
             }
         });

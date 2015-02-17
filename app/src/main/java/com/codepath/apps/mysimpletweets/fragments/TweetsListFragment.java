@@ -49,33 +49,33 @@ public class TweetsListFragment extends Fragment{
         return v;
     }
 
-    private void getUserProfile() {
-        client.getUserProfile(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                Log.d("DEBUG", json.toString());
-                User u = User.fromJSON(json);
-                //Store in sharedPreferences
-                SharedPreferences userInfo = getActivity().getSharedPreferences("userInfo", 0);
-                SharedPreferences.Editor editor = userInfo.edit();
-                editor.putString("ScreenName", u.getScreenName());
-                editor.putString("FullName", u.getFullName());
-                editor.putString("ProfileImageUrl", u.getProfileImageUrl());
-                editor.putLong("UniqueId", u.getUniqueId());
-                editor.apply();
-                user = u;
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if (errorResponse != null)
-                    Log.d("DEBUG", errorResponse.toString());
-                else
-                    Log.d("DEBUG", "getUserProdile Failes! Status code: " + statusCode);
-            }
-        });
-    }
+//    private void getUserProfile() {
+//        client.getUserProfile(new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+//                Log.d("DEBUG", json.toString());
+//                User u = User.fromJSON(json);
+//                //Store in sharedPreferences
+//                SharedPreferences userInfo = getActivity().getSharedPreferences("userInfo", 0);
+//                SharedPreferences.Editor editor = userInfo.edit();
+//                editor.putString("ScreenName", u.getScreenName());
+//                editor.putString("FullName", u.getFullName());
+//                editor.putString("ProfileImageUrl", u.getProfileImageUrl());
+//                editor.putLong("UniqueId", u.getUniqueId());
+//                editor.apply();
+//                user = u;
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                if (errorResponse != null)
+//                    Log.d("DEBUG", errorResponse.toString());
+//                else
+//                    Log.d("DEBUG", "getUserProdile Failes! Status code: " + statusCode);
+//            }
+//        });
+//    }
 
     //creation lifecycle event
     @Override

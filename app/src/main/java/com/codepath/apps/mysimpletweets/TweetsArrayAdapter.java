@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.squareup.picasso.Picasso;
@@ -27,13 +29,13 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //get the tweet
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
         //find or inflate the template
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
 
         //find the subview to fill data in the templates
-        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+        final ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvFullName = (TextView) convertView.findViewById(R.id.tvFullName);
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
@@ -48,9 +50,20 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         else
             tvTime.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
         ivProfileImage.setImageResource(android.R.color.transparent);//clear
+        ivProfileImage.setTag(tweet.getUser().getScreenName());
         Picasso.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
                 .into(ivProfileImage);
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                Toast.makeText(getContext(), "id: " + v.getId() + ", tag: " + v.getTag(), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("screenName", tweet.getUser().getScreenName());
+                getContext().startActivity(i);
+            }
+        });
         //return the view to be inserted in the list
         return convertView;
     }
