@@ -32,7 +32,6 @@ public class UserTimelineFragment extends TweetsListFragment {
     private TwitterClient client;
     private boolean firstRun = true;
     private User user;
-    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,32 +46,6 @@ public class UserTimelineFragment extends TweetsListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                clear();
-                setMax_id(1);
-                populateTimeline();
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        //Set end-less scrolling here
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline();
-            }
-        });
 
         return v;
     }
@@ -85,10 +58,10 @@ public class UserTimelineFragment extends TweetsListFragment {
         return fragment;
     }
 
-    private void populateTimeline() {
+    protected void populateTimeline() {
         String screenName = getArguments().getString("screenName");
         //get json
-        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
+        client.getUserTimeline(screenName,getMax_id(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 Log.d("DEBUG", json.toString());
@@ -102,24 +75,24 @@ public class UserTimelineFragment extends TweetsListFragment {
                     firstRun = false;
                     clear();
 
-                    try {
-                        Tweet.dropTable();
-                        List<Tweet> tempListTweets = new Select().from(Tweet.class).execute();//DEBUG
-                        List<Tweet> tempListUsers = new Select().from(User.class).execute();//DEBUG
-                        Log.d("DEBUG", "Num of items in table (tweets/users): " + tempListTweets.size() + "/" + tempListUsers.size());//DEBUG
-
-                        /*
-                         * Save in one transaction the tweets to DB
-                         */
-                        ActiveAndroid.beginTransaction();
-                        for (int i = 0; i < tweetsFromJson.size(); i++) {
-                            tweetsFromJson.get(i).getUser().save();
-                            tweetsFromJson.get(i).save();
-                        }
-                        ActiveAndroid.setTransactionSuccessful();
-                    } finally {
-                        ActiveAndroid.endTransaction();
-                    }
+//                    try {
+//                        Tweet.dropTable();
+//                        List<Tweet> tempListTweets = new Select().from(Tweet.class).execute();//DEBUG
+//                        List<Tweet> tempListUsers = new Select().from(User.class).execute();//DEBUG
+//                        Log.d("DEBUG", "Num of items in table (tweets/users): " + tempListTweets.size() + "/" + tempListUsers.size());//DEBUG
+//
+//                        /*
+//                         * Save in one transaction the tweets to DB
+//                         */
+//                        ActiveAndroid.beginTransaction();
+//                        for (int i = 0; i < tweetsFromJson.size(); i++) {
+//                            tweetsFromJson.get(i).getUser().save();
+//                            tweetsFromJson.get(i).save();
+//                        }
+//                        ActiveAndroid.setTransactionSuccessful();
+//                    } finally {
+//                        ActiveAndroid.endTransaction();
+//                    }
                 }
 
                 addAll(tweetsFromJson);

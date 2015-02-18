@@ -32,7 +32,6 @@ public class MentionsTimelineFragment extends TweetsListFragment{
     private TwitterClient client;
     private boolean firstRun = true;
     private User user;
-    private SwipeRefreshLayout swipeContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,39 +46,13 @@ public class MentionsTimelineFragment extends TweetsListFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                clear();
-                setMax_id(1);
-                populateTimeline();
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        //Set end-less scrolling here
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                populateTimeline();
-            }
-        });
 
         return v;
     }
 
-    private void populateTimeline() {
+    protected void populateTimeline() {
         //get json
-        client.getMentionsTimeline(new JsonHttpResponseHandler() {
+        client.getMentionsTimeline(getMax_id(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 Log.d("DEBUG", json.toString());

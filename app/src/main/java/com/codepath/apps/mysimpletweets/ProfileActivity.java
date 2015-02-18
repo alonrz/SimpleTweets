@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.mysimpletweets.fragments.UserHeaderFragment;
 import com.codepath.apps.mysimpletweets.fragments.UserTimelineFragment;
@@ -19,6 +20,7 @@ public class ProfileActivity extends ActionBarActivity {
     User user;
     UserTimelineFragment fragmentUserTimeline;
     UserHeaderFragment fragmentUserHeader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,8 @@ public class ProfileActivity extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
                 //current user account info
-
+                getSupportActionBar().setTitle(user.getScreenName());
+                ((ProgressBar) findViewById(R.id.pbHeader)).setVisibility(ProgressBar.INVISIBLE);
                 fragmentUserHeader.addUserInfo(user);
             }
         });

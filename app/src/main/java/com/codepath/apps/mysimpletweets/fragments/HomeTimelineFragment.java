@@ -35,7 +35,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
 
     private boolean firstRun = true;
 
-    private SwipeRefreshLayout swipeContainer;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +108,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         });
     }
 
-    private void populateTimeline() {
+    protected void populateTimeline() {
 
         if(firstRun)
         {

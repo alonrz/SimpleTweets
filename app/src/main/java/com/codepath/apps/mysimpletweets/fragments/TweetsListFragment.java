@@ -4,12 +4,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.codepath.apps.mysimpletweets.EndlessScrollListener;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TweetsArrayAdapter;
 import com.codepath.apps.mysimpletweets.TwitterClient;
@@ -23,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetsListFragment extends Fragment{
+public abstract class TweetsListFragment extends Fragment{
 
     private TweetsArrayAdapter adapter;
     private ArrayList<Tweet> tweets;
@@ -33,6 +35,7 @@ public class TweetsListFragment extends Fragment{
     protected ListView lvTweets;
     protected TwitterClient client;
     protected User user;
+    protected SwipeRefreshLayout swipeContainer;
 
 
     //inflation logic
@@ -46,36 +49,34 @@ public class TweetsListFragment extends Fragment{
         //connect listview and adapter
         lvTweets.setAdapter(adapter);
 
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                clear();
+                setMax_id(1);
+                populateTimeline();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        //Set end-less scrolling here
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                populateTimeline();
+            }
+        });
         return v;
     }
-
-//    private void getUserProfile() {
-//        client.getUserProfile(new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-//                Log.d("DEBUG", json.toString());
-//                User u = User.fromJSON(json);
-//                //Store in sharedPreferences
-//                SharedPreferences userInfo = getActivity().getSharedPreferences("userInfo", 0);
-//                SharedPreferences.Editor editor = userInfo.edit();
-//                editor.putString("ScreenName", u.getScreenName());
-//                editor.putString("FullName", u.getFullName());
-//                editor.putString("ProfileImageUrl", u.getProfileImageUrl());
-//                editor.putLong("UniqueId", u.getUniqueId());
-//                editor.apply();
-//                user = u;
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                if (errorResponse != null)
-//                    Log.d("DEBUG", errorResponse.toString());
-//                else
-//                    Log.d("DEBUG", "getUserProdile Failes! Status code: " + statusCode);
-//            }
-//        });
-//    }
 
     //creation lifecycle event
     @Override
@@ -87,6 +88,8 @@ public class TweetsListFragment extends Fragment{
         //create adapter;
         adapter = new TweetsArrayAdapter(getActivity(), tweets);
     }
+
+    protected abstract void populateTimeline();
 
     public void addAll(List<Tweet> tweets) {
         this.adapter.addAll(tweets);

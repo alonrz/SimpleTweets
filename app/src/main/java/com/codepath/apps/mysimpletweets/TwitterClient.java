@@ -77,24 +77,26 @@ public class TwitterClient extends OAuthBaseClient {
 
     }
 
-    public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
+    public void getMentionsTimeline(long max_id, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         //spedify params
         RequestParams params = new RequestParams();
         params.put("count", 25);
 //        params.put("since_id", 1);
-//        if(max_id > 10)
-//            params.put("max_id", max_id-1); //the -1 is b/c max_id is inclusive.
+        if(max_id > 10)
+            params.put("max_id", max_id-1); //the -1 is b/c max_id is inclusive.
         //exec the request
         Log.i("CONNECTING", "a call was made to twitter!");
         getClient().get(apiUrl, params, handler);
     }
 
-    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+    public void getUserTimeline(String screenName, long max_id, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/user_timeline.json");
         RequestParams params = new RequestParams();
         params.put("count", 25);
         params.put("screen_name", screenName);
+        if (max_id > 10)
+            params.put("max_id", max_id - 1); //the -1 is b/c max_id is inclusive.
         getClient().get(apiUrl, params, handler);
 
     }
@@ -112,11 +114,20 @@ public class TwitterClient extends OAuthBaseClient {
      * @param handler
      */
     public void getUserProfile(String screenName, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("users/show.json");
-        RequestParams params = new RequestParams();
-        params.put("screen_name", screenName);
+
+        String apiUrl;
+        if(screenName == null) {
+            apiUrl = getApiUrl("account/verify_credentials.json");
+            getClient().get(apiUrl, handler);
+        }
+        else {
+            apiUrl = getApiUrl("users/show.json");
+            RequestParams params = new RequestParams();
+            params.put("screen_name", screenName);
+            getClient().get(apiUrl, params, handler);
+        }
 //       no params. The default is good.
-        getClient().get(apiUrl, params, handler);
+
     }
 
 }
