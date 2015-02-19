@@ -1,7 +1,6 @@
-# Simple Tweets - A Tweeter Experience
-A simple Tweeter client with ability to read and compose tweets.
+# Simple Tweets Redux - A Tweeter Experience
+A little more than a simple Tweeter client with ability to read and compose tweets. With the Redux version you can now see Mentions, Profile page and go into other users' profile pages.
 
-Time spend: ~8 hours. 
 
 External libraries used:
 - [RestClientTemplate](https://github.com/codepath/android-rest-client-template)
@@ -20,7 +19,19 @@ User stories include (must):
   - User can click a “Compose” icon in the Action Bar on the top right
   - User can then enter a new tweet and post this to twitter
   - User is taken back to home timeline with new tweet visible in timeline
- 
+
+Redux User stories include (must):
+ * [x] User can switch between Timeline and Mention views using tabs.
+  - User can view their home timeline tweets.
+  - User can view the recent mentions of their username.
+ * [x] User can navigate to view their own profile
+  - User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+ * [x] User can click on the profile image in any tweet to see another user's profile.
+  - User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+  - Profile view should include that user's timeline
+
+ * [x] User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
+
 User stories include (Optional):
  * [x] Optional: Links in tweets are clickable and will launch the web browser (see autolink)
  * [x] Optional: User can see a counter with total number of characters left for tweet
@@ -31,7 +42,7 @@ User stories include (Optional):
  * [x] Extras: disable send button when no text, or over 140 characters.
  
 
-
-![Video Walkthrough](SimpleTweetsAppWalkthough2.gif)
+![Video Walkthrough - V2.0 (Redux)](WalkthroughTwitterAppRedux.gif)
+![Video Walkthrough - V1.0](SimpleTweetsAppWalkthough2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
