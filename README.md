@@ -43,6 +43,5 @@ User stories include (Optional):
  
 
 ![Video Walkthrough - V2.0 (Redux)](WalkthroughTwitterAppRedux.gif)
-![Video Walkthrough - V1.0](SimpleTweetsAppWalkthough2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
